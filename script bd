@@ -1,0 +1,38 @@
+CREATE DATABASE PROJECTCNAB;
+
+USE PROJECTCNAB;
+
+CREATE TABLE IF NOT EXISTS TRANSACOES(
+	TransacaoId int(11) NOT NULL AUTO_INCREMENT,
+	Descricao varchar(30) NOT NULL,
+	Natureza varchar(10),
+	Sinal char(1),
+	PRIMARY KEY (TransacaoId),
+	UNIQUE KEY (Descricao)
+	)ENGINE=InnoDB;
+
+
+INSERT INTO TRANSACOES(Descricao, Natureza, Sinal) VALUES
+	("Débito", "Entrada","+"),
+	("Boleto", "Saída","-"),
+	("Financiamento", "Saída","-"),
+	("Crédito", "Entrada","+"),
+	("Recebimento Empréstimo", "Entrada","+"),
+	("Vendas", "Entrada","+"),
+	("Recebimento TED", "Entrada","+"),
+	("Recebimento DOC", "Entrada","+"),
+	("Aluguel", "Saída","-");
+
+CREATE TABLE IF NOT EXISTS CNAB(
+	Cnabid int(11)NOT NULL AUTO_INCREMENT,
+	Tipo int,
+	Data date NOT NULL,
+	Valor decimal,
+	CPF varchar(11),
+	Cartao varchar(13),
+	Hora date,
+	Dono_da_Loja varchar(20),
+	Nome_da_Loja varchar(30),
+	PRIMARY KEY (Cnabid),
+	FOREIGN KEY(Tipo) REFERENCES TRANSACOES(TransacaoId)
+	)ENGINE=InnoDB;
